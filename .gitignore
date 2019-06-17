@@ -1,0 +1,15 @@
+# https://github.com/trufflesuite/truffle/issues/62
+# Logs
+logs
+*.log
+
+# Directories used by tools like mocha & istanbul
+coverage
+shippable
+
+# Dependency directory
+node_modules
+
+# Generated files
+build
+dist
