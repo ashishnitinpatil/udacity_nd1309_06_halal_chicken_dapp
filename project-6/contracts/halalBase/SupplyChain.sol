@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.8;
 
 import "../halalCore/Ownable.sol";
 import "../halalAccessControl/PoultryRole.sol";
@@ -7,10 +7,10 @@ import "../halalAccessControl/ConsumerRole.sol";
 
 
 contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
-    address public owner;
-    uint private upc;
+    address payable public owner;
+    uint32 private upc;
 
-    mapping(uint => Chicken) private chickens;
+    mapping(uint32 => Chicken) private chickens;
 
     enum State {
         Hatched,          // 0
@@ -23,35 +23,34 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
     }
 
     struct Chicken {
-        uint upc;
+        uint32 upc;
         State state; // Current chicken state
         bytes32 skuPoultry;
         bytes32 skuSlaughterHouse;
         address ownerID; // Address of the chicken's current owner
         address originPoultryID; // Address of the Poultry
-        string originPoultryName;
-        string originPoultryInformation;
+        bytes32 originPoultryName;
         bytes32 originPoultryLatitude;
         bytes32 originPoultryLongitude;
         uint price; // price when bought / sold at respective stage
-        address slaughterHouseID; // Address of the SlaughterHouse
-        address consumerID; // Address of the Consumer
+        address payable slaughterHouseID; // Address of the SlaughterHouse
+        address payable consumerID; // Address of the Consumer
     }
 
-    event Hatched(uint upc);
-    event Raised(uint upc);
-    event SoldForSlaughter(uint upc);
-    event PurchasedHealthy(uint upc);
-    event Slaughtered(uint upc);
-    event SoldRetail(uint upc);
-    event BoughtRetail(uint upc);
+    event Hatched(uint32 upc);
+    event Raised(uint32 upc);
+    event SoldForSlaughter(uint32 upc);
+    event PurchasedHealthy(uint32 upc);
+    event Slaughtered(uint32 upc);
+    event SoldRetail(uint32 upc);
+    event BoughtRetail(uint32 upc);
 
     modifier onlyOwner() {
         require(msg.sender == owner);
         _;
     }
 
-    modifier returnBalance(uint _upc, bool isConsumer) {
+    modifier returnBalance(uint32 _upc, bool isConsumer) {
         _;
         uint _price = chickens[_upc].price;
         uint amountToReturn = msg.value - _price;
@@ -62,47 +61,47 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
         }
     }
 
-    modifier hatched(uint _upc) {
+    modifier hatched(uint32 _upc) {
         require(chickens[_upc].state == State.Hatched);
         _;
     }
 
-    modifier raised(uint _upc) {
+    modifier raised(uint32 _upc) {
         require(chickens[_upc].state == State.Raised);
         _;
     }
 
-    modifier soldForSlaughter(uint _upc) {
+    modifier soldForSlaughter(uint32 _upc) {
         require(chickens[_upc].state == State.SoldForSlaughter);
         _;
     }
 
-    modifier purchasedHealthy(uint _upc) {
+    modifier purchasedHealthy(uint32 _upc) {
         require(chickens[_upc].state == State.PurchasedHealthy);
         _;
     }
 
-    modifier slaughtered(uint _upc) {
+    modifier slaughtered(uint32 _upc) {
         require(chickens[_upc].state == State.Slaughtered);
         _;
     }
 
-    modifier soldRetail(uint _upc) {
+    modifier soldRetail(uint32 _upc) {
         require(chickens[_upc].state == State.SoldRetail);
         _;
     }
 
-    modifier boughtRetail(uint _upc) {
+    modifier boughtRetail(uint32 _upc) {
         require(chickens[_upc].state == State.BoughtRetail);
         _;
     }
 
-    modifier isChickenOwner(uint _upc) {
+    modifier isChickenOwner(uint32 _upc) {
         require(msg.sender == chickens[_upc].ownerID);
         _;
     }
 
-    modifier paidEnoughForPurchase(uint _upc) {
+    modifier paidEnoughForPurchase(uint32 _upc) {
         require(msg.value >= chickens[_upc].price);
         _;
     }
@@ -122,8 +121,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
 
     function hatchChicken(
         bytes32 _skuPoultry,
-        string _originPoultryName,
-        string _originPoultryInformation,
+        bytes32 _originPoultryName,
         bytes32 _originPoultryLatitude,
         bytes32 _originPoultryLongitude
     )
@@ -138,18 +136,17 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
             ownerID: msg.sender,
             originPoultryID: msg.sender,
             originPoultryName: _originPoultryName,
-            originPoultryInformation: _originPoultryInformation,
             originPoultryLatitude: _originPoultryLatitude,
             originPoultryLongitude: _originPoultryLongitude,
             price: 0,
-            slaughterHouseID: 0,
-            consumerID: 0
+            slaughterHouseID: address(0),
+            consumerID: address(0)
         });
         emit Hatched(upc);
         upc++; // keep UPC unique for next chicken
     }
 
-    function raiseChicken(uint _upc)
+    function raiseChicken(uint32 _upc)
         public
         hatched(_upc)
         isChickenOwner(_upc)
@@ -158,7 +155,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
         emit Raised(_upc);
     }
 
-    function sellForSlaughter(uint _upc, uint _price)
+    function sellForSlaughter(uint32 _upc, uint _price)
         public
         raised(_upc)
         isChickenOwner(_upc)
@@ -168,7 +165,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
         emit SoldForSlaughter(_upc);
     }
 
-    function purchaseHealthy(uint _upc, bytes32 _sku)
+    function purchaseHealthy(uint32 _upc, bytes32 _sku)
         public
         payable
         onlySlaughterHouse
@@ -183,7 +180,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
         emit PurchasedHealthy(_upc);
     }
 
-    function slaughter(uint _upc)
+    function slaughter(uint32 _upc)
         public
         purchasedHealthy(_upc)
         isChickenOwner(_upc)
@@ -193,7 +190,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
         emit Slaughtered(_upc);
     }
 
-    function sellRetail(uint _upc, uint _price)
+    function sellRetail(uint32 _upc, uint _price)
         public
         slaughtered(_upc)
         isChickenOwner(_upc)
@@ -203,7 +200,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
         emit SoldRetail(_upc);
     }
 
-    function buyRetail(uint _upc)
+    function buyRetail(uint32 _upc)
         public
         payable
         onlyConsumer
@@ -217,7 +214,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
         emit BoughtRetail(_upc);
     }
 
-    function fetchChicken(uint _upc)
+    function fetchChicken(uint32 _upc)
         public
         view
         returns (
@@ -226,8 +223,7 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
             bytes32 skuSlaughterHouse,
             address ownerID,
             address originPoultryID,
-            string originPoultryName,
-            string originPoultryInformation,
+            bytes32 originPoultryName,
             bytes32 originPoultryLatitude,
             bytes32 originPoultryLongitude,
             uint price,
@@ -243,7 +239,6 @@ contract SupplyChain is Ownable, PoultryRole, SlaughterHouseRole, ConsumerRole {
             chicken.ownerID,
             chicken.originPoultryID,
             chicken.originPoultryName,
-            chicken.originPoultryInformation,
             chicken.originPoultryLatitude,
             chicken.originPoultryLongitude,
             chicken.price,
