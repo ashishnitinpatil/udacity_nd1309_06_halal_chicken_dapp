@@ -19,7 +19,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Please make sure you've already installed latest node, ganache-cli, Truffle and enabled MetaMask extension in your browser.
+Please make sure you've already installed Node, ganache-cli, Truffle and enabled MetaMask extension in your browser.
 
 ```
 Give examples (to be clarified)
@@ -80,7 +80,7 @@ Test smart contracts:
 truffle test
 ```
 
-All 10 tests should pass.
+All tests should pass.
 
 ![truffle test](images/truffle_test.png)
 
@@ -99,7 +99,7 @@ npm run dev
 ## Acknowledgments & Versions
 
 * Solidity (v0.5.8)
-* Ganache-cli (v6.4.4)
+* Ganache-cli (v6.4.4, core v2.5.6)
 * Truffle (v5.0.24)
-* NodeJS (v12.4.0)
+* NodeJS (v10.16.0)
 * NPM (6.9.0)
