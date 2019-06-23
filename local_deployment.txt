@@ -1,0 +1,74 @@
+$ truffle migrate
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+Network up to date.
+ashish@Proness-Aura-2:/media/ashish/Storage/Study/BlockChain_Nano_Degree/projects/06_halal_chicken_dapp/project-6$ truffle migrate
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+Starting migrations...
+======================
+> Network name:    'development'
+> Network id:      1561325529799
+> Block gas limit: 0x6691b7
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x1c66fd08d05209b4fe19f450d24009864b71d681b1b1208790e7877e52f68d92
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xFEeCfF2CB7d6f3BfcBE5fa41c49c8fB642f2dDbF
+   > block number:        1
+   > block timestamp:     1561325548
+   > account:             0x27D8D15CbC94527cAdf5eC14B69519aE23288B95
+   > balance:             99.99477214
+   > gas used:            261393
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00522786 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00522786 ETH
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'SupplyChain'
+   -----------------------
+   > transaction hash:    0x59faf6957de3716062f2dca068fef5a817644e71a0c80005853660496411b5e8
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xf2ee0b0Cdcae5013930B92c0Ba54F7F7f1933613
+   > block number:        3
+   > block timestamp:     1561325548
+   > account:             0x27D8D15CbC94527cAdf5eC14B69519aE23288B95
+   > balance:             99.94016766
+   > gas used:            2688201
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05376402 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.05376402 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.05899188 ETH
+

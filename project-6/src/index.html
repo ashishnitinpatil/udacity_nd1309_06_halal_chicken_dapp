@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halal Chicken BlockChain</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Halal Chicken DApp</h1>
+        <p style="text-align: center;">Prove that the chicken is halal using the Ethereum blockchain.</p>
+    </div>
+    <hr>
+
+    <div id="hcd-harvest">
+        <h3>Contract Owner ID - <span id="contractOwnerID"></span></h3>
+        <h3>Connected Metamask ID - <span id="connectedMetamaskID"></span></h3>
+        <hr>
+
+        <h2>Roles</h2>
+        <div class="form-group">
+            Poultry ID
+            <br>
+            <input type="text" id="addPoultryID" name="addPoultryID" value="0x018c2dabef4904ecbd7118350a0c54dbeae3549a" size="50">
+            <br>
+            Slaughter House ID
+            <br>
+            <input type="text" id="addSlaughterHouseID" name="addSlaughterHouseID" value="0xce5144391b4ab80668965f2cc4f2cc102380ef0a" size="50">
+            <br>
+            Consumer ID
+            <br>
+            <input type="text" id="addConsumerID" name="addConsumerID" value="0x460c31107dd048e34971e57da2f99f659add4f02" size="50">
+            <br>
+            <button type="button" data-id="1">Add Poultry</button>
+            <button type="button" data-id="2">Add Slaughter House</button>
+            <button type="button" data-id="3">Add Consumer</button>
+        </div>
+        <div class=form-break></div>
+
+        <h2>Poultry</h2>
+        <div class="form-group">
+            SKU
+            <br><input type="text" id="skuPoultry" name="skuPoultry" value="P001"><br>
+            Name
+            <br><input type="text" id="originPoultryName" name="originPoultryName" value="KFC"><br>
+            Latitude
+            <br><input type="text" id="originPoultryLatitude" name="originPoultryLatitude" value="25.113883"><br>
+            Longitude
+            <br><input type="text" id="originPoultryLongitude" name="originPoultryLongitude" value="55.3917989"><br>
+            UPC
+            <br><input type="text" id="upcPoultry" name="upcPoultry" value="1" size="50"><br>
+            Price
+            <br><input type="text" id="pricePoultry" name="pricePoultry" value="0.6">ETH<br>
+            <button type="button" data-id="11">Hatch</button>
+            <button type="button" data-id="12">Raise</button>
+            <button type="button" data-id="13">Sell For Slaughter</button>
+            <button type="button" data-id="99">Fetch</button>
+        </div>
+        <div class=form-break></div>
+
+        <h2>Slaughter House</h2>
+        <div class="form-group">
+            UPC
+            <br><input type="text" id="upcSlaughterHouse" name="upcSlaughterHouse" value="1" size="50"><br>
+            SKU
+            <br><input type="text" id="skuSlaughterHouse" name="skuSlaughterHouse" value="S001"><br>
+            Price
+            <br><input type="text" id="priceSlaughterHouse" name="priceSlaughterHouse" value="1">ETH<br>
+            <button type="button" data-id="21">Purchase Healthy</button>
+            <button type="button" data-id="22">Slaughter</button>
+            <button type="button" data-id="23">Sell Retail</button>
+            <button type="button" data-id="99">Fetch</button>
+        </div>
+        <div class=form-break></div>
+
+        <h2>Consumer</h2>
+        <div class="form-group">
+            UPC
+            <br><input type="text" id="upcConsumer" name="upcConsumer" value="1" size="50"><br>
+            Price
+            <br><input type="text" id="priceConsumer" name="priceConsumer" value="1">ETH<br>
+            <button type="button" data-id="31">Buy Retail</button>
+            <button type="button" data-id="99">Fetch</button>
+        </div>
+        <div class=form-break></div>
+
+        <h2>Fetch Chicken</h2>
+        <div class="form-group">
+            UPC
+            <br>
+            <input type="text" id="upc" name="upc" value="1" size="50"><br>
+            <button type="button" data-id="99">Fetch</button>
+        </div>
+        <hr>
+    </div>
+
+    <h2>Chicken Details</h2>
+    <div id="hcd-chicken"></div>
+    <br>
+    <hr>
+
+    <h2>Transaction History</h2>
+    <div>
+        <ul id="hcd-events">
+            <!-- Events will appear here from app.js -->
+        </ul>
+        <br>
+        <hr>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script src="js/web3.min.js"></script> -->
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
